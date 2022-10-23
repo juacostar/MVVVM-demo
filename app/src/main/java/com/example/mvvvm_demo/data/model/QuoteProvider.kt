@@ -1,8 +1,10 @@
 package com.example.mvvvm_demo.data.model
 
-class QuoteProvider {
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class QuoteProvider @Inject constructor(){
     // setting the data for the app
-    companion object {
-        var quotes:List<QuoteModel> = emptyList()
-    }
+    var quotes:List<QuoteModel> = emptyList()
 }

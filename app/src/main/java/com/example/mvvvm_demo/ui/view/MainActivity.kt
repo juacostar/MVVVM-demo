@@ -7,7 +7,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.mvvvm_demo.databinding.ActivityMainBinding
 import com.example.mvvvm_demo.ui.viewModel.QuoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     // var initializated after onCreate

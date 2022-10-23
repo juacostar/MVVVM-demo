@@ -6,15 +6,23 @@ import androidx.lifecycle.viewModelScope
 import com.example.mvvvm_demo.data.model.QuoteModel
 import com.example.mvvvm_demo.data.model.QuoteProvider
 import com.example.mvvvm_demo.domain.GetQuotesUseCase
+import com.example.mvvvm_demo.domain.GetRandomQuoteUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class QuoteViewModel: ViewModel() {
+// decorator for inject dependencies
+@HiltViewModel
+class QuoteViewModel @Inject constructor(
+    private val getQuotesUseCase: GetQuotesUseCase,
+    private val getRandomQuoteUseCase: GetRandomQuoteUseCase
+): ViewModel() {
 
     // live data for connect an activity with the Quote model, mutable means that it can change
     val quoteModel = MutableLiveData<QuoteModel>()
     val isLoading = MutableLiveData<Boolean>()
 
-    val getQuotesUseCase = GetQuotesUseCase()
+
 
     fun onCreate() {
         // is a controlled coroutine
@@ -30,8 +38,13 @@ class QuoteViewModel: ViewModel() {
     }
 
     fun getQuote(){
-//        val quote = QuoteProvider.quotes[0]
-//        quoteModel.postValue(quote)
+        isLoading.postValue(true)
+        val quote = getRandomQuoteUseCase()
+        if(quote != null){
+            quoteModel.postValue(quote)
+        }
+        isLoading.postValue(false)
+
     }
 
 }

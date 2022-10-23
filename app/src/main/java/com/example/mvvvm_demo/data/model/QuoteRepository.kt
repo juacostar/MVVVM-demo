@@ -1,14 +1,18 @@
 package com.example.mvvvm_demo.data.model
 
 import com.example.mvvvm_demo.data.model.network.QuoteService
+import javax.inject.Inject
 
-class QuoteRepository {
 
-    private val api = QuoteService()
+// @Inject constructor for dependencies injection
+class QuoteRepository @Inject constructor(
+    private val api: QuoteService,
+    private val quoteProvider: QuoteProvider
+) {
 
     suspend fun getAllQuotes():List<QuoteModel>{
         val response = api.getQuotes()
-        QuoteProvider.quotes = response
+        quoteProvider.quotes = response
         return response
     }
 }
